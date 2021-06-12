@@ -92,6 +92,15 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('films.index')" :active="request()->routeIs('films.index')">
+                {{ __('Films') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('contacts.index')" :active="request()->routeIs('contacts.index')">
+                {{ __('Contacts') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('jobs.index')" :active="request()->routeIs('jobs.index')">
+                {{ __('Jobs') }}
+            </x-responsive-nav-link>
         </div>
 
         <!-- Responsive Settings Options -->

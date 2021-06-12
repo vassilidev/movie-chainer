@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Route;
 /*
  * All routes where authentication is required
  */
+
+Route::redirect('/', '/login');
+
 Route::middleware(['auth'])->group(function () {
     Route::view('/dashboard', 'dashboard')->name('dashboard');
 

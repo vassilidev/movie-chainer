@@ -33,7 +33,7 @@
     <main>
         {{ $slot }}
     </main>
-    <x:notify-messages />
+    <x:notify-messages/>
     @notifyJs
 </div>
 </body>

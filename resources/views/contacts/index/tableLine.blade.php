@@ -1,17 +1,20 @@
 <tr>
     <x-table.td.text>
-        {{ $job->name }}
+        {{ $contact->gender }}
     </x-table.td.text>
     <x-table.td.text>
-        {{ $job->label }}
+        {{ $contact->name }}
+    </x-table.td.text>
+    <x-table.td.text>
+        {{ $contact->surname }}
     </x-table.td.text>
     <x-table.td.action>
-        <x-button.link href="{{ route('jobs.edit', $job) }}">
+        <x-button.link href="{{ route('contacts.edit', $contact) }}">
             {{ __('Edit') }}
         </x-button.link>
     </x-table.td.action>
     <x-table.td.action>
-        <form class="deleteForm" action="{{ route('jobs.destroy', $job) }}" method="POST">
+        <form class="deleteForm" action="{{ route('contacts.destroy', $contact) }}" method="POST">
             @csrf
             @method('DELETE')
             <x-button>

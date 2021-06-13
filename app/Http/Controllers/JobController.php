@@ -66,8 +66,7 @@ class JobController extends Controller
 
         smilify('success', 'Job successfully modified');
 
-        return redirect()
-            ->route('jobs.index');
+        return redirect()->route('jobs.index');
     }
 
     /**

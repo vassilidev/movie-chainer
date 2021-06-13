@@ -1,4 +1,5 @@
 <x-card>
+    <x-auth-validation-errors class="mb-4" :errors="$errors"/>
     <form action="{{ route('jobs.store') }}" method="POST">
         @csrf
         <div>

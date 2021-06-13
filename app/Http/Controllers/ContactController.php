@@ -2,84 +2,85 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ContactRequest;
 use App\Models\Contact;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class ContactController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return View
      */
-    public function index()
+    public function index(): View
     {
-        //
-    }
+        $contacts = Contact::all();
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return view('contacts.contactsIndex', compact('contacts'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param ContactRequest $request
+     * @return RedirectResponse
      */
-    public function store(Request $request)
+    public function store(ContactRequest $request): RedirectResponse
     {
-        //
-    }
+        $validatedData = $request->validated();
+        Contact::create($validatedData);
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Contact  $contact
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Contact $contact)
-    {
-        //
+        smilify('success', __('Contact successfully created'));
+
+        return redirect()->back();
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Contact  $contact
-     * @return \Illuminate\Http\Response
+     * @param Contact $contact
+     * @return View
      */
-    public function edit(Contact $contact)
+    public function edit(Contact $contact): View
     {
-        //
+        return view('contacts.contactsEdit', compact('contact'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Contact  $contact
-     * @return \Illuminate\Http\Response
+     * @param ContactRequest $request
+     * @param Contact $contact
+     * @return RedirectResponse
      */
-    public function update(Request $request, Contact $contact)
+    public function update(ContactRequest $request, Contact $contact): RedirectResponse
     {
-        //
+        $validatedData = $request->validated();
+
+        $contact->update($validatedData);
+        $contact->save();
+
+        smilify('success', 'Contact successfully modified');
+
+        return redirect()->route('contacts.index');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Contact  $contact
-     * @return \Illuminate\Http\Response
+     * @param Contact $contact
+     * @return Response
      */
-    public function destroy(Contact $contact)
+    public function destroy(Contact $contact): RedirectResponse
     {
-        //
+        $contact->delete();
+
+        smilify('success', 'Contact successfully deleted');
+
+        return redirect()->back();
     }
 }

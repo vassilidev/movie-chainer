@@ -17,7 +17,8 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('jobs', JobController::class)
         ->except(['create', 'show']);
 
-    Route::resource('contacts', ContactController::class);
+    Route::resource('contacts', ContactController::class)
+        ->except(['create', 'show']);
 
     Route::resource('films', FilmController::class);
 });

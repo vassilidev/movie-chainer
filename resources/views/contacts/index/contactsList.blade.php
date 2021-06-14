@@ -2,13 +2,7 @@
     <thead class="bg-gray-50">
     <tr>
         <x-table.th.text>
-            {{ __('Gender') }}
-        </x-table.th.text>
-        <x-table.th.text>
-            {{ __('Name') }}
-        </x-table.th.text>
-        <x-table.th.text>
-            {{ __('Label') }}
+            {{ __('Contact') }}
         </x-table.th.text>
         <x-table.th.action>
             <span class="sr-only">{{ __('Edit') }}</span>

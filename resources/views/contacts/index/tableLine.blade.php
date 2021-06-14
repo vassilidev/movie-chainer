@@ -1,12 +1,6 @@
 <tr>
     <x-table.td.text>
-        {{ $contact->gender }}
-    </x-table.td.text>
-    <x-table.td.text>
-        {{ $contact->name }}
-    </x-table.td.text>
-    <x-table.td.text>
-        {{ $contact->surname }}
+        {{ $contact->getFullName() }}
     </x-table.td.text>
     <x-table.td.action>
         <x-button.link href="{{ route('contacts.edit', $contact) }}">

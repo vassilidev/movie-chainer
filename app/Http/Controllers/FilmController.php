@@ -2,84 +2,121 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\FilmRequest;
 use App\Models\Film;
-use Illuminate\Http\Request;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 
 class FilmController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return View
      */
-    public function index()
+    public function index(): View
     {
-        //
+        //Get all the films with their number of contacts
+        $films = Film::withCount(['contacts'])->get();
+
+        return view('films.filmsIndex', compact('films'));
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return View
      */
-    public function create()
+    public function create(): View
     {
-        //
+        return view('films.filmsCreate');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param FilmRequest $request
+     * @return RedirectResponse
      */
-    public function store(Request $request)
+    public function store(FilmRequest $request): RedirectResponse
     {
-        //
-    }
+        $validatedData = $request->validated();
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Film  $film
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Film $film)
-    {
-        //
+        $film = Film::create([
+            'title' => $validatedData['title'],
+            'year' => $validatedData['year'],
+        ]);
+
+        //If the request contains contacts related to a job for the film
+        if (!empty($validatedData['contacts'])) {
+            foreach ($validatedData['contacts'] as $jobID => $contacts) {
+                $film->contacts()->attach($contacts, ['job_id' => $jobID]);
+            }
+
+            smilify('success', 'Film successfully created with your contact(s) !');
+        } else {
+            smilify('success', 'Film successfully created !');
+        }
+
+        return redirect()->route('films.index');
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Film  $film
-     * @return \Illuminate\Http\Response
+     * @param Film $film
+     * @return View
      */
-    public function edit(Film $film)
+    public function edit(Film $film): View
     {
-        //
+        return view('films.filmsUpdate', compact('film'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Film  $film
-     * @return \Illuminate\Http\Response
+     * @param FilmRequest $request
+     * @param Film $film
+     * @return RedirectResponse
      */
-    public function update(Request $request, Film $film)
+    public function update(FilmRequest $request, Film $film): RedirectResponse
     {
-        //
+        $validatedData = $request->validated();
+
+        $film->update([
+            'title' => $validatedData['title'],
+            'year' => $validatedData['year'],
+        ]);
+
+        $film->save();
+
+        if (!empty($validatedData['contacts'])) {
+            //Detach all the old contacts
+            $film->contacts()->sync([]);
+
+            //Attach the new contacts
+            foreach ($validatedData['contacts'] as $jobID => $contacts) {
+                $film->contacts()->attach($contacts, ['job_id' => $jobID]);
+            }
+        }
+
+        smilify('success', __('Film successfully modified !'));
+
+        return redirect()->route('films.index');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Film  $film
-     * @return \Illuminate\Http\Response
+     * @param Film $film
+     * @return RedirectResponse
      */
-    public function destroy(Film $film)
+    public function destroy(Film $film): RedirectResponse
     {
-        //
+        $film->delete();
+
+        smilify('success', 'Film successfully deleted !');
+
+        return redirect()->back();
     }
 }

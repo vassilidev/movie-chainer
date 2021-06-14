@@ -22,7 +22,8 @@ class FilmFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'title' => $this->faker->realText(50),
+            'year' => $this->faker->year
         ];
     }
 }

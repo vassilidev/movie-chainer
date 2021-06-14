@@ -3,6 +3,10 @@
 
 [![N|Solid](https://assets.chooseyourboss.com/companies/logos/000/007/912/square/moviechainer.png?1526570152)](https://moviechainer.com/)
 
+Demo : https://movie-chainer.vassili-joffroy.fr/
+email : p2m@moviechainer.com
+password : password
+
 ## Tech
 
 - Tailwind CSS

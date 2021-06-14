@@ -6,7 +6,6 @@ use App\Http\Requests\ContactRequest;
 use App\Models\Contact;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 class ContactController extends Controller
@@ -64,7 +63,7 @@ class ContactController extends Controller
         $contact->update($validatedData);
         $contact->save();
 
-        smilify('success', 'Contact successfully modified');
+        smilify('success', 'Contact successfully modified !');
 
         return redirect()->route('contacts.index');
     }
@@ -79,7 +78,7 @@ class ContactController extends Controller
     {
         $contact->delete();
 
-        smilify('success', 'Contact successfully deleted');
+        smilify('success', 'Contact successfully deleted !');
 
         return redirect()->back();
     }

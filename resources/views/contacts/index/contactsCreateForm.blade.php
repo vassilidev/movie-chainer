@@ -12,7 +12,7 @@
                 </select>
             </div>
         </div>
-        <div>
+        <div class="mt-4">
             <x-label for="name" :value="__('Name')"/>
             <x-input id="name" type="text" name="name" :value="old('name')" required
                      class="block mt-1 w-full"/>

@@ -22,7 +22,9 @@
     @forelse($contacts as $contact)
         @include('contacts.index.tableLine', $contact)
     @empty
-        {{ __('No data') }}
+        <tr>
+            <td colspan="100%">{{ __('No data') }}</td>
+        </tr>
     @endforelse
     </tbody>
 </x-table>

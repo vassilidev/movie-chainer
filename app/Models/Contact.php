@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Str;
 
 class Contact extends Model
@@ -15,6 +16,16 @@ class Contact extends Model
         'name',
         'surname',
     ];
+
+    /*
+     * Get all the films where the contact have a role
+     */
+    public function films(): BelongsToMany
+    {
+        return $this->belongsToMany(Film::class)
+            ->using(ContactFilm::class)
+            ->withPivot('job_id');
+    }
 
     public function getGender(): string
     {

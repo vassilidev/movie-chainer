@@ -15,9 +15,18 @@ class CreateContactFilmTable extends Migration
     {
         Schema::create('contact_film', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('contact_id')->constrained();
-            $table->foreignId('film_id')->constrained();
-            $table->foreignId('job_id')->constrained();
+            $table->foreignId('contact_id')
+                ->constrained()
+                ->onDelete('cascade');
+
+            $table->foreignId('film_id')
+                ->constrained()
+                ->onDelete('cascade');
+
+            $table->foreignId('job_id')
+                ->constrained()
+                ->onDelete('cascade');
+
             $table->unique(['contact_id', 'film_id', 'job_id']);
             $table->timestamps();
         });

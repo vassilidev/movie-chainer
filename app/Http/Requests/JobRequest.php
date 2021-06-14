@@ -2,8 +2,11 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Job;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use PHPUnit\Framework\SkippedTestError;
+use Str;
 
 class JobRequest extends FormRequest
 {
@@ -54,5 +57,14 @@ class JobRequest extends FormRequest
                 Rule::unique('jobs', 'label')->ignore($this->job),
             ],
         ];
+    }
+
+    public function withValidator($validator)
+    {
+        $validator->after(function ($validator) {
+            if (Job::where('label', Str::slug($this->label))->exists()) {
+                $validator->errors()->add('contact', __('Slug already taken !'));
+            }
+        });
     }
 }

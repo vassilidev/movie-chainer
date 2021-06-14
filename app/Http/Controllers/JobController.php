@@ -33,10 +33,9 @@ class JobController extends Controller
         $validatedData = $request->validated();
         Job::create($validatedData);
 
-        smilify('success', __('Job successfully created'));
+        smilify('success', __('Job successfully created !'));
 
-        return redirect()
-            ->back();
+        return redirect()->back();
     }
 
     /**
@@ -64,7 +63,7 @@ class JobController extends Controller
         $job->update($validatedData);
         $job->save();
 
-        smilify('success', 'Job successfully modified');
+        smilify('success', 'Job successfully modified !');
 
         return redirect()->route('jobs.index');
     }
@@ -79,7 +78,7 @@ class JobController extends Controller
     {
         $job->delete();
 
-        smilify('success', 'Job successfully deleted');
+        smilify('success', 'Job successfully deleted !');
 
         return redirect()->back();
     }

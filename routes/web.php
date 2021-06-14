@@ -20,7 +20,8 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('contacts', ContactController::class)
         ->except(['create', 'show']);
 
-    Route::resource('films', FilmController::class);
+    Route::resource('films', FilmController::class)
+        ->except(['show']);
 });
 
 // Include all Auths routes
